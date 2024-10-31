@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="display: grid; place-items: center; padding-top: 5px; margin: 2px; border: 1px solid;">
+<h2 style="margin-left: 50px;">{{ title }}</h2>
+<h3>{{ message }}</h3>
+
+<address style="margin-left: 50px; border: 2px solid blue; padding: 10px;">
+    Art Gallery of Ontario<br />
+    317 Dundas Street West<br />
+    Toronto, Ontario
+M5T 1G4 <br />
+    <abbr title="Phone">P:</abbr>
+    416 979 6608
+</address>
+
+<address style="margin-left: 57px;">
+    <strong>Library & Archives:</strong><a href="mailto: priority@ago.ca"> priority@ago.ca</a><br />
+    <strong>Events:</strong> <a href="mailto: events@ago.ca"> events@ago.ca</a>   <br />
+    <strong>Events:</strong> <a href="mailto:  evenements@louvre.fr">  evenements@louvre.fr</a>
+</address>
+<div style="margin-left: 50px;">
+    <p><a href="https://ago.ca/" class="btn btn-outline-primary btn-large" target="_blank" style="text-decoration: none;">Learn more &raquo;</a></p>
+</div>
+</div>
+{% endblock %}

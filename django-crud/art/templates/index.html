@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1 style="padding: 15px; margin: 15px;">Art Gallery</h1>
+<table class="table table-striped table-bordered" style="margin: 15px;">
+<form method="post" action="{% url 'index' %}">
+{% csrf_token %}
+<tr class="table-dark" style="padding: 15px;"><th>Art Title</th><th>Style Number</th><th>Edit</th></tr>
+{% if not form.instance.id %}
+<tr>
+  {% include 'save.html' %}
+</tr>
+{% endif %}
+{% for art in arts %}
+  <tr >
+    {% if form.instance.id == art.id %}
+    {% include 'save.html' %}
+    {% else %}
+    <td>{{ art.name }}</td>
+    <td>{{ art.value }}</td>
+    {% comment %} <td>{{ art.style.styleName }}</td> {% endcomment %}
+
+    <td style="color: blue;">
+      <button formnovalidate name="edit" value="{{ art.id }}">Edit</button>
+      <button formnovalidate name="delete" value="{{ art.id }}">Delete</button>
+    </td>
+    {% endif %}
+  </tr>
+{% endfor %}
+</form>
+</table>
+<button class="btn btn-outline-primary" style="margin: 15px;" type="button"><a href="{% url 'about' %}" style="text-decoration: none; color: inherit;">About page</a></button>
+{% comment %} <a href="{% url 'about' %}">About page</a> {% endcomment %}
+
+<div class="container mt-3">
+  <h2>Styles</h2>
+  <p>The list of Styles:</p>            
+  <table class="table table-striped">
+    <thead>
+      <tr class="table-info">
+        <th>Style Name</th>
+        <th>Style Number</th>
+     </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Watercolor</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>Oil Paint</td>
+        <td>2</td>
+      </tr>
+      <tr>
+        <td>Pencil Drawn</td>
+        <td>3</td>
+      </tr>
+      <tr>
+        <td>Mixed Media</td>
+        <td>4</td>
+      </tr>
+      <tr>
+        <td>Other</td>
+        <td>5</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+{% endblock %}

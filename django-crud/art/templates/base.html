@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load static %}
+  <title>{{ title }}</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="icon" href="{% static 'C:\Users\marie\OneDrive\Desktop\1. A Python Class\assignments\FinalProject\django-crud-final\django-crud\art\content\images\favicon.ico' %}" type="image/x-icon"> 
+  {% load bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+</head>
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="https://www.louvre.fr/visites-en-ligne/petitegalerie/saison1/#/petite_galerie_2/" target="_blank" style="margin-left: 5px;">🖼️🎨 ART</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mynavbar">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'index' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'about' %}">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+          </li>
+          {% comment %} <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Login</a>
+          </li> {% endcomment %}
+        </ul>
+        <form class="d-flex" onsubmit="searchArt(event)">
+            <input id="searchInput" class="form-control me-2" type="text" placeholder="Search" value="{{ art.name }}" oninput="searchArt()">
+            <button class="btn btn-primary" type="button">Search</button>
+          </form>
+          <div id="results"></div>
+      </div>
+    </div>
+    <div style="margin-left: 15px;" >{% include 'loginpartial.html' %} </div>
+    
+  </nav>
+<body>
+{% block content %}
+{% endblock %}
+</body>
+<script>
+    async function searchArt(event) {
+        if (event) event.preventDefault(); // Prevent form submission
+    
+        const query = document.getElementById('searchInput').value;
+        const response = await fetch(`/search?query=${encodeURIComponent(query)}`);
+        const results = await response.json();
+    
+        if (results.length > 0) {
+            let alertMessage = 'Search Results:\n';
+            results.forEach((art) => {
+                alertMessage += `Name: ${art.name}, Description: ${art.description}\n`;
+            });
+            alert(alertMessage);
+        } else {
+            alert('No results found.');
+        }
+    }
+  </script>
+</html>
